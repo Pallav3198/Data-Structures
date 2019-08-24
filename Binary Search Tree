@@ -1,0 +1,171 @@
+// Binary Search Tree
+#include<stdio.h>
+typedef struct node
+{
+    struct nodetype * left;
+    int data;
+    struct nodetype * right;
+
+}node;
+typedef struct node * list;
+list start;
+// create the BST
+list create_bst(list start)
+{
+    start = NULL;
+}
+//insert element in the BST
+list insert_ele(list start)
+{
+    int num;
+    list new_node,ptr,parentptr;
+    printf("Enter the data to be inserted\n");
+    scanf("%d",&num);
+    new_node = (list)malloc(sizeof(node));
+    new_node->data = num;
+    if(start==NULL)
+    {
+        new_node->left = NULL;
+        new_node->right = NULL;
+    }
+    else
+    {
+        parentptr = NULL;
+        ptr = start;
+        while(ptr!=NULL)
+        {
+            parentptr = ptr;
+            if(num<ptr->data)
+            {
+                ptr = ptr->left;
+            }
+            else
+            {
+                ptr = ptr->right;
+            }
+        }
+        if(num<parentptr->data)
+        {
+            parentptr->left = ptr;
+        }
+        else
+            parentptr->right = ptr;
+    }
+ return start;
+}
+/*
+  basic traversal techniques
+  A. Pre-order traversal
+     1.Visiting the root node
+     2.Traversing the left sub tree
+     3. Traversing the right sub tree
+
+  B. In-order traversal
+     1.Traversing the left sub tree
+     2.Visiting the root node
+     3.Traversing the right sub tree
+
+  C. Post order traversal
+     1.Traversing the left sub tree
+     2.Traversing the right sub tree
+     3.Visiting the root node
+
+  D. Level Order Traversal
+     //also called as breadth-first traversal algorithm
+     nodes on the same level are traversed first
+*/
+
+//PRE-ORDER TRAVERSAL
+list pre_order(list start)
+{
+    list ptr = start;
+    printf("%d",ptr->data);
+    if(ptr->left)
+        pre_order(ptr->left);
+    if(ptr->right)
+        pre_order(ptr->right);
+    return start;
+}
+//IN_ORDER TRAVERSAL
+list in_order(list start)
+{
+    list ptr = start;
+    if(ptr->left)
+       in_order(ptr->left);
+    printf("%d",ptr->data);
+    if(ptr->right)
+        in_order(ptr->right);
+
+    return start;
+}
+//POST_ORDER TRAVERSAL
+list post_order(list start)
+{
+    list ptr = start;
+    if(ptr->left)
+        post_order(ptr->left);
+    if(ptr->right)
+        post_order(ptr->right);
+    printf("%d",ptr->data);
+
+    return start;
+}
+//To find the smallest element in the BST
+list smallest(list start)
+{
+   list ptr = start;
+    if((ptr==NULL)||(ptr->left==NULL))
+    {
+        printf("%d",ptr->data);
+    }
+    else
+        smallest(ptr->left);
+    return start;
+}
+//To find the largest element in the BST
+list largest(list start)
+{
+    list ptr=start;
+    if((ptr==NULL)||(ptr->right==NULL))
+    {
+        printf("%d",ptr->data);
+    }
+    else
+      largest(ptr->right);
+ return start;
+}
+//
+int main()
+{
+    int option;
+    do{
+    printf("MAIN MENU\n");
+    printf("1.Initiate the Binary Search Tree\n");
+    printf("2.Insert elements in the Binary Search Tree\n");
+    printf("3.Pre-Order Traversal\n");
+    printf("4.In-Order Traversal\n");
+    printf("5.Post-Order Traversal\n");
+    printf("6.Enter 6 to exit\n");
+    scanf("%d",&option);
+    switch(option)
+    {
+    case 1:
+        start=create_bst(start);
+        printf("BST Initiated\n");
+        break;
+    case 2:
+        start=insert_ele(start);
+        break;
+    case 3:
+        start=pre_order(start);
+        break;
+    case 4:
+        start=in_order(start);
+        break;
+    case 5:
+        start=post_order(start);
+        break;
+    }
+}while(option!=6);
+    return 0;
+}
